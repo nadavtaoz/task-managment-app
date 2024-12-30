@@ -11,15 +11,17 @@ import {
   Typography,
 } from "@mui/material";
 
-export default function TaskForm() {
+const defaultTask = {
+	title: "",
+	description: "",
+	priority: "",
+	taskOwner: "",
+	dueDate: "",
+}
 
-	const [task, setTask] = useState({
-    title: "",
-    description: "",
-    status: "",
-    taskOwner: "",
-    dueDate: "",
-  });
+export default function TaskForm({onSubmit, isLoading}) {
+
+	const [task, setTask] = useState(defaultTask);
 
 	const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,8 +33,11 @@ export default function TaskForm() {
 
 	const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Task created:", task);
-    // Add logic to save the task
+
+		onSubmit(task)
+			.then(()=> {
+				setTask(defaultTask);
+			});
   };
 
 	// Get today's date in YYYY-MM-DD format
@@ -75,16 +80,17 @@ export default function TaskForm() {
 				/>
 
 				<FormControl fullWidth>
-					<InputLabel sx={{background: '#fff'}}>Status</InputLabel>
+					<InputLabel sx={{background: '#fff'}}>Priority</InputLabel>
 					<Select
-						name="status"
-						value={task.status}
+						name="priority"
+						value={task.priority}
 						onChange={handleChange}
 						required
 					>
-						<MenuItem value="Pending">Pending</MenuItem>
-						<MenuItem value="In Progress">In Progress</MenuItem>
-						<MenuItem value="Completed">Completed</MenuItem>
+						<MenuItem value="Low">Low</MenuItem>
+						<MenuItem value="Medium">Medium</MenuItem>
+						<MenuItem value="High">High</MenuItem>
+						<MenuItem value="Critical">Critical</MenuItem>
 					</Select>
 				</FormControl>
 
@@ -113,7 +119,7 @@ export default function TaskForm() {
 					}}
 				/>
 
-				<Button variant="contained" type="submit" color="primary">
+				<Button variant="contained" type="submit" color="primary" disabled={isLoading}>
 					Create Task
 				</Button>
 			</Box>

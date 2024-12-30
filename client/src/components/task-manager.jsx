@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSetRecoilState, useRecoilValue  } from "recoil";
 import { Container, Box, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
@@ -13,20 +13,43 @@ export default function TaskManager() {
   const setTasks = useSetRecoilState(tasksState);
   const taskService = useRecoilValue(taskServiceAtom);
 
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // get all tasks
   useEffect(() => {
     async function getTasks() {
       try {
         const tasks = await taskService.getTasks();
         setTasks(tasks);
-      } catch (e) {
-        alert(e);
-        setTasks([]);
+      } catch (err) {
+        console.error("Error fetching tasks:", err.message);
+        setError(e);
       }
     }
 
     getTasks();
 
   }, []);
+
+  // creates a new task
+  const handleTaskSubmit = async (task) => {
+    setIsLoading(true);
+    try {
+      const createdTask = await taskService.createTask(task);
+      setTasks(prevTasks => [task, ...prevTasks]);
+    } catch (err) {
+      console.error("Error creating task:", err.message);
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if(error) {
+    return <p style={{ color: 'red' }}>Error: {error}</p>;
+  }
+
 
   return (
     <Container maxWidth="lg">
@@ -42,7 +65,7 @@ export default function TaskManager() {
           </Grid>
 
           <Grid size={4}>
-            <TaskForm />
+            <TaskForm onSubmit={handleTaskSubmit} isLoading={isLoading}/>
           </Grid>
         </Grid>
       </Box>

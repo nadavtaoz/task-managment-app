@@ -27,8 +27,8 @@ exports.getTaskById = (req, res, next) => {
  * Controller to create a new task
  */
 exports.createTask = (req, res, next) => {
-  const { title, description, status } = req.body;
-  const task = new Task(null, title, description, status);
+  const { title, description, status, taskOwner, dueDate } = req.body;
+  const task = new Task(null, title, description, status, taskOwner, dueDate);
   task.save(err => {
     if (err) {
       res.status(500).json({ message: 'Failed to create task' });

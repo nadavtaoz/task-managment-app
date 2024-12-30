@@ -23,11 +23,11 @@ const saveTasksToFile = (tasks, cb) => {
 };
 
 module.exports = class Task {
-  constructor(id, title, description, status, taskOwner, dueDate) {
+  constructor(id, title, description, priority, taskOwner, dueDate) {
     this.id = id;
     this.title = title;
     this.description = description;
-    this.status = status;
+    this.priority = priority;
     this.taskOwner = taskOwner;
     this.dueDate = dueDate;
   }
@@ -40,7 +40,11 @@ module.exports = class Task {
         tasks[existingTaskIndex] = this;
       } else {
         // Create new task
-        this.id = (tasks.length ? tasks[tasks.length - 1].id + 1 : 1).toString();
+        this.id = (tasks.length ? parseInt(tasks[tasks.length - 1].id) + 1 : 1).toString();
+        const currentDate = new Date();
+        this.creationTime = currentDate.toISOString();
+        this.status = "Pending";
+        this.tags = [];
         tasks.push(this);
       }
       saveTasksToFile(tasks, cb);
