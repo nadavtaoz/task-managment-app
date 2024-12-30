@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
-import { Container, Box } from '@mui/material';
+import { Container, Box, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 
 import { tasksState } from "../recoil/atoms";
 import TaskList from "./task-list";
+import TaskForm from "./task-form";
 
 export default function TaskManager() {
 
@@ -29,18 +30,19 @@ export default function TaskManager() {
 
   return (
     <Container maxWidth="lg">
-      <h1>Task Manager (List)</h1>
+      <Typography variant="h2" component="h2" align="center" gutterBottom pt={2}>
+        Task Manager
+      </Typography>
+      
 
-      <Box sx={{ flexGrow: 1 }} className="tasks-container">
+      <Box sx={{ flexGrow: 1 }} className="tasks-container" pb={3}>
         <Grid container spacing={2} className="tasks-container-grid">
           <Grid size={8}>
             <TaskList />
           </Grid>
 
           <Grid size={4}>
-            <div>
-              add new task
-            </div>
+            <TaskForm />
           </Grid>
         </Grid>
       </Box>
