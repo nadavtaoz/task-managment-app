@@ -1,8 +1,18 @@
-const express = require('express');
-const bodyParser = require('body-parser');
+const express     = require('express');
+const bodyParser  = require('body-parser');
 const tasksRoutes = require('./routes/tasks');
+const cors        = require('cors');
+const app         = express();
 
-const app = express();
+
+const corsOptions = {
+  origin: 'http://localhost:3300',
+  methods: 'GET,POST,DELETE,PUT ',
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+
+// Use CORS middleware with specified options
+app.use(cors(corsOptions));
 
 // Middleware to parse JSON requests
 app.use(bodyParser.json());
