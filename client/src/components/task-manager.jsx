@@ -1,27 +1,27 @@
 import { useEffect } from "react";
-import { useSetRecoilState } from "recoil";
+import { useSetRecoilState, useRecoilValue  } from "recoil";
 import { Container, Box, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
-
 import { tasksState } from "../recoil/atoms";
+
+import taskServiceAtom from "../recoil/task-service-atom";
 import TaskList from "./task-list";
 import TaskForm from "./task-form";
 
 export default function TaskManager() {
 
   const setTasks = useSetRecoilState(tasksState);
+  const taskService = useRecoilValue(taskServiceAtom);
 
   useEffect(() => {
     async function getTasks() {
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/tasks`);
-
-      // TODO:
-      if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`);
+      try {
+        const tasks = await taskService.getTasks();
+        setTasks(tasks);
+      } catch (e) {
+        alert(e);
+        setTasks([]);
       }
-
-      const tasks = await response.json();
-      setTasks(tasks);
     }
 
     getTasks();
