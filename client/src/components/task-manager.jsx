@@ -4,7 +4,7 @@ import { Container, Box, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import { tasksState } from "../recoil/atoms";
 
-import taskServiceAtom from "../recoil/task-service-atom";
+import taskServiceAtom from "../recoil/tasks-service-atom";
 import TaskList from "./task-list";
 import TaskForm from "./task-form";
 
