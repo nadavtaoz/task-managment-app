@@ -23,13 +23,14 @@ const saveTasksToFile = (tasks, cb) => {
 };
 
 module.exports = class Task {
-  constructor(id, title, description, priority, taskOwner, dueDate) {
+  constructor(id, title, description, priority, taskOwner, dueDate, status) {
     this.id = id;
     this.title = title;
     this.description = description;
     this.priority = priority;
     this.taskOwner = taskOwner;
     this.dueDate = dueDate;
+    this.status = status;
   }
 
   save(cb) {
@@ -75,8 +76,8 @@ module.exports = class Task {
   }
 
   // format task row data to Task instance
-  static format({ id, title, description, status, taskOwner, dueDate }) {
-    return new Task(id, title, description, status, taskOwner, dueDate);
+  static format({ id, title, description, status, taskOwner, dueDate, priority }) {
+    return new Task(id, title, description, status, taskOwner, dueDate, priority);
   }
 };
 

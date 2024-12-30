@@ -7,14 +7,18 @@ import { tasksState } from "../recoil/atoms";
 import taskServiceAtom from "../recoil/tasks-service-atom";
 import TaskList from "./task-list";
 import TaskForm from "./task-form";
+import EditTaskModal from "./modals/edit-task-modal";
 
 export default function TaskManager() {
 
   const setTasks = useSetRecoilState(tasksState);
+  const allTasks = useRecoilValue(tasksState);
   const taskService = useRecoilValue(taskServiceAtom);
 
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalTask, setModalTask] = useState({});
 
   // get all tasks
   useEffect(() => {
@@ -29,7 +33,6 @@ export default function TaskManager() {
     }
 
     getTasks();
-
   }, []);
 
   // creates a new task
@@ -37,13 +40,26 @@ export default function TaskManager() {
     setIsLoading(true);
     try {
       const createdTask = await taskService.createTask(task);
-      setTasks(prevTasks => [task, ...prevTasks]);
+      setTasks(prevTasks => [createdTask, ...prevTasks]);
     } catch (err) {
       console.error("Error creating task:", err.message);
       setError(err.message);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  // save task from modal
+  const handleSave = (updatedTask) => {
+    console.log("Updated Task:", updatedTask);
+    // setTask(updatedTask);
+  };
+
+  // open the edit task modal
+  const openModal = id => {
+    const task = allTasks.find(t => t.id === id);
+    setModalTask(task);
+    setIsModalOpen(true);
   };
 
   if(error) {
@@ -61,7 +77,7 @@ export default function TaskManager() {
       <Box sx={{ flexGrow: 1 }} className="tasks-container" pb={3}>
         <Grid container spacing={2} className="tasks-container-grid">
           <Grid size={8}>
-            <TaskList />
+            <TaskList openModal={openModal}/>
           </Grid>
 
           <Grid size={4}>
@@ -69,6 +85,13 @@ export default function TaskManager() {
           </Grid>
         </Grid>
       </Box>
+
+      <EditTaskModal 
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        task={modalTask}
+        onSave={handleSave}
+      />
     </Container>
 
   )

@@ -10,14 +10,9 @@ import {
   FormControl,
   Typography,
 } from "@mui/material";
+import { defaultTask } from "../constants";
 
-const defaultTask = {
-	title: "",
-	description: "",
-	priority: "",
-	taskOwner: "",
-	dueDate: "",
-}
+
 
 export default function TaskForm({onSubmit, isLoading}) {
 

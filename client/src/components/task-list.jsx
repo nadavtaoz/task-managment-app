@@ -3,7 +3,7 @@ import { useRecoilValue } from "recoil";
 import { tasksState } from "../recoil/atoms";
 import { Pagination, Paper, ListItem, ListItemText, List } from "@mui/material";
 
-export default function TaskList() {
+export default function TaskList({openModal}) {
 
 	const tasks = useRecoilValue(tasksState);
 	const itemsPerPage = 10;
@@ -21,6 +21,11 @@ export default function TaskList() {
 		setCurrentPage(value);
 	};
 
+	// Handle click on a list item
+	const handleItemClick = id => {
+		openModal(id);
+	}
+
 	return (
     <div className="tasks-list-container">
       <Paper elevation={3} sx={{ padding: 2 }}>
@@ -28,6 +33,7 @@ export default function TaskList() {
 						{currentTasks.map((task, index) => (
 							<ListItem
 								 key={task.id}
+								 onClick={() => handleItemClick(task)}
 								 sx={{
 									'&:hover': {
 										backgroundColor: '#f4f4f4', // Light gray background on hover

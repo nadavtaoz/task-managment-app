@@ -33,7 +33,7 @@ exports.createTask = (req, res, next) => {
     if (err) {
       res.status(500).json({ message: 'Failed to create task' });
     } else {
-      res.status(201).json(task);
+      res.status(201).json(Task.format(task));
     }
   });
 };
@@ -55,7 +55,7 @@ exports.updateTask = (req, res, next) => {
       if (err) {
         res.status(500).json({ message: 'Failed to update task' });
       } else {
-        res.status(200).json(updatedTask);
+        res.status(200).json(Task.format(updatedTask));
       }
     });
   });
