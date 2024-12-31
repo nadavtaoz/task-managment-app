@@ -1,25 +1,21 @@
-
-const fs = require('fs');
+const fs = require('fs/promises');
 const path = require('path');
 
 const dbFilePath = path.join(__dirname, '../_mockDB/tasks.json');
 
 // Helper function to read tasks from the file
-const getTasksFromFile = cb => {
-  fs.readFile(dbFilePath, 'utf8', (err, data) => {
-    if (err) {
-      cb([]);
-    } else {
-      cb(JSON.parse(data));
-    }
-  });
+const getTasksFromFile = async () => {
+  try {
+    const data = await fs.readFile(dbFilePath, 'utf8');
+    return JSON.parse(data);
+  } catch (err) {
+    return [];
+  }
 };
 
 // Helper function to write tasks to the file
-const saveTasksToFile = (tasks, cb) => {
-  fs.writeFile(dbFilePath, JSON.stringify(tasks, null, 2), err => {
-      if (cb) cb(err);
-  });
+const saveTasksToFile = async (tasks) => {
+  await fs.writeFile(dbFilePath, JSON.stringify(tasks, null, 2));
 };
 
 module.exports = class Task {
@@ -36,49 +32,46 @@ module.exports = class Task {
   static statusTypes = {
     PENDING: "Pending",
     IN_PROGRESS: "In Progress",
-    COMPELTED: "Completed",
+    COMPLETED: "Completed",
     TO_DO: "To Do"
   };
 
-  save(cb) {
-    getTasksFromFile(tasks => {
-      if (this.id) {
-        // Update existing task
-        const existingTaskIndex = tasks.findIndex(task => task.id === this.id);
-        tasks[existingTaskIndex] = this;
-      } else {
-        // Create new task
-        this.id = (tasks.length ? parseInt(tasks[tasks.length - 1].id) + 1 : 1).toString();
-        const currentDate = new Date();
-        this.creationTime = currentDate.toISOString();
-        this.tags = [];
-        tasks.push(this);
-      }
-      saveTasksToFile(tasks, cb);
-    });
+  async save() {
+    const tasks = await getTasksFromFile();
+
+    if (this.id) {
+      // Update existing task
+      const existingTaskIndex = tasks.findIndex(task => task.id === this.id);
+      tasks[existingTaskIndex] = this;
+    } else {
+      // Create new task
+      this.id = (tasks.length ? parseInt(tasks[tasks.length - 1].id) + 1 : 1).toString();
+      const currentDate = new Date();
+      this.creationTime = currentDate.toISOString();
+      this.tags = [];
+      tasks.push(this);
+    }
+
+    await saveTasksToFile(tasks);
   }
 
   // Get all tasks (formatted)
-  static fetchAll(cb) {
-    getTasksFromFile(tasks => {
-      cb(tasks.map(task => Task.format(task)));
-    });
+  static async fetchAll() {
+    const tasks = await getTasksFromFile();
+    return tasks.map(task => Task.format(task));
   }
 
   // Get a task by id
-  static findById(id, cb) {
-    getTasksFromFile(tasks => {
-      const task = tasks.find(t => t.id === id);
-      cb(task);
-    });
+  static async findById(id) {
+    const tasks = await getTasksFromFile();
+    return tasks.find(t => t.id === id);
   }
 
   // Delete a task by id
-  static deleteById(id, cb) {
-    getTasksFromFile(tasks => {
-      const updatedTasks = tasks.filter(t => t.id !== id);
-      saveTasksToFile(updatedTasks, cb);
-    });
+  static async deleteById(id) {
+    const tasks = await getTasksFromFile();
+    const updatedTasks = tasks.filter(t => t.id !== id);
+    await saveTasksToFile(updatedTasks);
   }
 
   // format task row data to Task instance
@@ -86,4 +79,3 @@ module.exports = class Task {
     return new Task(task.id, task.title, task.description, task.priority, task.taskOwner, task.dueDate, task.status);
   }
 };
-
