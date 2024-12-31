@@ -9,6 +9,7 @@ import { sortTasks } from "../utils/sorting";
 import { filterTasks } from "../utils/filtering";
 import FilterCriteria from "./filters/filter-criteria";
 import SearchCriteria from "./filters/search-criteria";
+import TaskItem from "./task-item";
 
 export default function TaskList({ openModal }) {
 
@@ -91,26 +92,7 @@ export default function TaskList({ openModal }) {
                 }
               />
 
-              <div>
-                <Typography variant="body2" component="div" color="text.secondary">
-                  Owner: {task.taskOwner}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  component="div"
-                  sx={{
-                    color: priorityColors[task.priority] || "gray",
-                  }}
-                >
-                  Priority: {task.priority}
-                </Typography>
-                <Typography variant="body2" component="div" color="text.secondary">
-                  Status: {task.status}
-                </Typography>
-                <Typography variant="body2" component="div" color="text.secondary">
-                  Due Date: {new Date(task.dueDate).toLocaleDateString()}
-                </Typography>
-              </div>
+              <TaskItem task={task} />
             </ListItem>
           ))}
         </List>
