@@ -51,7 +51,6 @@ export default function TaskManager() {
 
   // save task from modal
   const handleSave = async (updatedTask) => {
-    console.log("Updated Task:", updatedTask);
     setIsLoading(true);
     setIsModalOpen(false);
     try {
@@ -74,6 +73,28 @@ export default function TaskManager() {
         return updatedTasks;
       });
       alert("Task updated!");
+    } catch (err) {
+      console.error("Error updating task:", err.message);
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+      setModalTask({});
+    }
+  };
+
+  // delete task from modal
+  const handleDelete = async id => {
+    setIsLoading(true);
+    setIsModalOpen(false);
+
+    try {
+      const result = taskService.deleteTask(id);
+      setTasks(prevTasks => {
+        const updatedTasks = [...prevTasks];
+        const deletedTaskIndex = updatedTasks.findIndex(task => task.id === id);
+        updatedTasks.splice(deletedTaskIndex, 1);
+        return updatedTasks;
+      });
     } catch (err) {
       console.error("Error updating task:", err.message);
       setError(err.message);
@@ -119,6 +140,7 @@ export default function TaskManager() {
         onClose={() => setIsModalOpen(false)}
         task={modalTask}
         onSave={handleSave}
+        onDelete={handleDelete}
       />
     </Container>
 

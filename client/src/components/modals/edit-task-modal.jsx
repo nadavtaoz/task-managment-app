@@ -4,7 +4,7 @@ import { Modal, Box, TextField, Button, Typography, FormControl, Select, InputLa
 import { defaultTask, taskPriorities, taskStatusTypes } from "../../constants";
 import '../../styles/edit-task-modal.css';
 
-function EditTaskModal({ open, onClose, task, onSave }) {
+function EditTaskModal({ open, task, onSave, onDelete, onClose }) {
 
   const [formData, setFormData] = useState({});
 
@@ -32,8 +32,12 @@ function EditTaskModal({ open, onClose, task, onSave }) {
   // Handle save click
   const handleSave = () => {
     onSave(formData);
-    onClose();
   };
+
+  // Handle delete click
+  const handleDelete = () => {
+    onDelete(task.id);
+  }
 
   return (
     <Modal open={open}
@@ -110,10 +114,13 @@ function EditTaskModal({ open, onClose, task, onSave }) {
             }}
           />
           <Box mt={2} display="flex" justifyContent="space-between">
-            <Button onClick={onClose} color="secondary" variant="outlined">
+            <Button onClick={onClose} color="secondary" variant="outlined" title="Cancel">
               Cancel
             </Button>
-            <Button onClick={handleSave} color="primary" variant="contained">
+            <Button onClick={handleDelete} color="error" variant="outlined" title="Delete">
+              Delete
+            </Button>
+            <Button onClick={handleSave} color="primary" variant="contained" title="Save">
               Save
             </Button>
           </Box>
