@@ -27,13 +27,19 @@
     "id": "3",
     "title": "Million clearly along threat.",
     "description": "Politics agency woman build evidence cut action. Buy herself think bring specific chair. Let turn adult nor song adult.",
-    "priority": "To Do"
+    "priority": "Low",
+    "taskOwner": "gfdgdfg",
+    "dueDate": "2024-12-26",
+    "status": "In Progress"
   },
   {
     "id": "4",
     "title": "Republican grow though number.",
     "description": "Hold join visit behavior table. Stop it give say.",
-    "priority": "In Progress"
+    "priority": "High",
+    "taskOwner": "gfdgdfg",
+    "dueDate": "2024-12-18",
+    "status": "To Do"
   },
   {
     "id": "5",
@@ -356,14 +362,10 @@
     "id": "29",
     "title": "Yet Republican rate continue.",
     "description": "Probably perform large daughter. Floor mouth between night least help. Success national until single attack fall.",
-    "dueDate": "2024-10-17",
-    "status": "In Progress",
-    "creationTime": "2024-08-09T05:16:29Z",
+    "priority": "Low",
     "taskOwner": "David Gill",
-    "priority": "Medium",
-    "tags": [
-      "Frontend"
-    ]
+    "dueDate": "2024-10-17",
+    "status": "In Progress"
   },
   {
     "id": "30",
@@ -13982,5 +13984,14 @@
     "status": "Pending",
     "creationTime": "2024-12-31T07:54:59.558Z",
     "tags": []
+  },
+  {
+    "id": "1003",
+    "title": "nadav task",
+    "description": "fsdfsdfds",
+    "priority": "Low",
+    "taskOwner": "nadavi",
+    "dueDate": "2024-10-03",
+    "status": "Pending"
   }
 ]

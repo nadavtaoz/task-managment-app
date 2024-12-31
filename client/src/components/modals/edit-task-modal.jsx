@@ -39,6 +39,9 @@ function EditTaskModal({ open, task, onSave, onDelete, onClose }) {
     onDelete(task.id);
   }
 
+  // Get today's date in YYYY-MM-DD format
+  const today = new Date().toISOString().split("T")[0];
+
   return (
     <Modal open={open}
       onClose={onClose}
@@ -111,6 +114,9 @@ function EditTaskModal({ open, task, onSave, onDelete, onClose }) {
             margin="normal"
             InputLabelProps={{
               shrink: true,
+            }}
+            inputProps={{
+              min: today,
             }}
           />
           <Box mt={2} display="flex" justifyContent="space-between">

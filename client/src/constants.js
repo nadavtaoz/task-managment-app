@@ -16,6 +16,13 @@ export const taskPriorities = {
   CRITICAL: "Critical"
 };
 
+export const priorityColors = {
+  [taskPriorities.LOW]: "green",
+  [taskPriorities.MEDIUM]: "blue",
+  [taskPriorities.HIGH]: "red",
+  [taskPriorities.CRITICAL]: "purple",
+};
+
 export const taskStatusTypes = {
   PENDING: "Pending",
   IN_PROGRESS: "In Progress",

@@ -50,6 +50,6 @@
 .tasks-list-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  row-gap: 24px;
   height: 100%;
 }
