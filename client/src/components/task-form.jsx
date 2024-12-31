@@ -43,7 +43,7 @@ export default function TaskForm({onSubmit, isLoading}) {
 				component="form"
 				onSubmit={handleSubmit}
 				sx={{
-					maxWidth: 500,
+					maxWidth: { xs: 'none', md: 500 },
 					margin: "0 auto",
 					display: "flex",
 					flexDirection: "column",

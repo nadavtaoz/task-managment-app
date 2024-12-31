@@ -117,19 +117,19 @@ export default function TaskManager() {
 
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="xl">
       <Typography variant="h2" component="h2" align="center" gutterBottom pt={2}>
         Task Manager
       </Typography>
       
 
       <Box sx={{ flexGrow: 1 }} className="tasks-container" pb={3}>
-        <Grid container spacing={2} className="tasks-container-grid">
-          <Grid size={8}>
+        <Grid container spacing={{xs: 2, md: 3, lg: 4}} className="tasks-container-grid">
+          <Grid size={{xs: 12, md: 8}} order={{xs: 2, md:1}}>
             <TaskList openModal={openModal}/>
           </Grid>
 
-          <Grid size={4}>
+          <Grid size={{xs: 12, md: 4}} order={{xs: 1, md:2}}>
             <TaskForm onSubmit={handleTaskSubmit} isLoading={isLoading}/>
           </Grid>
         </Grid>
