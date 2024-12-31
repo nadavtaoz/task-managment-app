@@ -3,7 +3,6 @@ import { useRecoilValue } from "recoil";
 import { tasksState, sortCriteriaState, filterCriteriaState, searchFilter } from "../recoil/atoms";
 import { Pagination, Paper, ListItem, ListItemText, List, Box, Typography } from "@mui/material";
 
-import { priorityColors } from "../constants";
 import SortCriteria from "./filters/sort-criteria";
 import { sortTasks } from "../utils/sorting";
 import { filterTasks } from "../utils/filtering";
@@ -79,19 +78,12 @@ export default function TaskList({ openModal }) {
               onClick={() => handleItemClick(task.id)}
               sx={{
                 "&:hover": {
-                  backgroundColor: "#f4f4f4", // Light gray background on hover
-                  cursor: "pointer", // Pointer cursor to indicate interactivity
+                  backgroundColor: "#f4f4f4",
+                  cursor: "pointer",
                 },
+                columnGap: 2
               }}
             >
-              <ListItemText
-                primary={
-                  <Typography variant="h6" component="div">
-                    {task.title}
-                  </Typography>
-                }
-              />
-
               <TaskItem task={task} />
             </ListItem>
           ))}
