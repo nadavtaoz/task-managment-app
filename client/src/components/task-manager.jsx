@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useSetRecoilState, useRecoilValue  } from "recoil";
 import { Container, Box, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
@@ -28,7 +28,7 @@ export default function TaskManager() {
         setTasks(tasks);
       } catch (err) {
         console.error("Error fetching tasks:", err.message);
-        setError(e);
+        setError(err.message);
       }
     }
 
@@ -36,7 +36,7 @@ export default function TaskManager() {
   }, []);
 
   // creates a new task
-  const handleTaskSubmit = async (task) => {
+  const handleTaskSubmit = useCallback(async (task) => {
     setIsLoading(true);
     try {
       const createdTask = await taskService.createTask(task);
@@ -47,24 +47,22 @@ export default function TaskManager() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [taskService, setTasks]);
 
   // save task from modal
-  const handleSave = async (updatedTask) => {
+  const handleSave = useCallback(async (updatedTask) => {
     setIsLoading(true);
     setIsModalOpen(false);
     try {
-      // Find the original task from the task list
       const originalTask = allTasks.find(task => task.id === updatedTask.id);
 
-      // Extract only updated fields
       const taskUpdates = {};
       for (const key in updatedTask) {
         if (updatedTask[key] !== originalTask[key]) {
           taskUpdates[key] = updatedTask[key];
         }
       }
-      
+
       const updatedTaskResult = await taskService.updateTask(originalTask.id, taskUpdates);
       const updatedTaskIndex = allTasks.findIndex(task => task.id === updatedTaskResult.id);
       setTasks(prevTasks => {
@@ -80,15 +78,15 @@ export default function TaskManager() {
       setIsLoading(false);
       setModalTask({});
     }
-  };
+  }, [taskService, setTasks, allTasks]);
 
   // delete task from modal
-  const handleDelete = async id => {
+  const handleDelete = useCallback(async (id) => {
     setIsLoading(true);
     setIsModalOpen(false);
 
     try {
-      const result = taskService.deleteTask(id);
+      const result = await taskService.deleteTask(id);
       setTasks(prevTasks => {
         const updatedTasks = [...prevTasks];
         const deletedTaskIndex = updatedTasks.findIndex(task => task.id === id);
@@ -96,25 +94,24 @@ export default function TaskManager() {
         return updatedTasks;
       });
     } catch (err) {
-      console.error("Error updating task:", err.message);
+      console.error("Error deleting task:", err.message);
       setError(err.message);
     } finally {
       setIsLoading(false);
       setModalTask({});
     }
-  };
+  }, [taskService, setTasks]);
 
   // open the edit task modal
-  const openModal = id => {
+  const openModal = useCallback((id) => {
     const task = allTasks.find(t => t.id === id);
     setModalTask(task);
     setIsModalOpen(true);
-  };
+  }, [allTasks]);
 
   if(error) {
     return <p style={{ color: 'red' }}>Error: {error}</p>;
   }
-
 
   return (
     <Container maxWidth="xl">

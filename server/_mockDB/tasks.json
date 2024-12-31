@@ -12,16 +12,10 @@
     "id": "2",
     "title": "Likely usually thing near stand place reality.",
     "description": "I really finish end. Build would mean loss southern.",
-    "dueDate": "2024-09-11",
-    "status": "To Do",
-    "creationTime": "2024-08-02T11:59:29Z",
+    "priority": "High",
     "taskOwner": "Theresa Young",
-    "priority": "Low",
-    "tags": [
-      "Writing",
-      "Documentation",
-      "Backend"
-    ]
+    "dueDate": "2024-09-11",
+    "status": "To Do"
   },
   {
     "id": "3",

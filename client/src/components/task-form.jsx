@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 import {
   Box,
@@ -13,8 +13,7 @@ import {
 
 import { defaultTask, taskPriorities } from "../constants";
 
-export default function TaskForm({onSubmit, isLoading}) {
-
+const TaskForm = React.memo(({onSubmit, isLoading}) => {
 	const [task, setTask] = useState(defaultTask);
 
 	const handleChange = (e) => {
@@ -116,4 +115,6 @@ export default function TaskForm({onSubmit, isLoading}) {
 			</Box>
 		</div>
 	)
-}
+});
+
+export default TaskForm;

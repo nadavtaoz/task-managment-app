@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from "react";
+
+import React, { useState, useEffect, useRef } from "react";
 import { useRecoilValue } from "recoil";
 import { tasksState, sortCriteriaState, filterCriteriaState, searchFilter } from "../recoil/atoms";
 import { Pagination, Paper, ListItem, ListItemText, List, Box, Typography } from "@mui/material";
@@ -10,8 +11,8 @@ import FilterCriteria from "./filters/filter-criteria";
 import SearchCriteria from "./filters/search-criteria";
 import TaskItem from "./task-item";
 
-export default function TaskList({ openModal }) {
-
+const TaskList = React.memo(({ openModal }) => {
+  
   const tasks = useRecoilValue(tasksState);
   const sortCriteria = useRecoilValue(sortCriteriaState);
   const filterCriteria = useRecoilValue(filterCriteriaState);
@@ -72,7 +73,8 @@ export default function TaskList({ openModal }) {
           <FilterCriteria />
         </Box>
         <List>
-          {currentTasks.map((task, index) => (
+          {currentTasks.length === 0 && <li>Loading...</li>}
+          {currentTasks.length > 0 && currentTasks.map((task, index) => (
             <ListItem
               key={task.id}
               onClick={() => handleItemClick(task.id)}
@@ -99,4 +101,6 @@ export default function TaskList({ openModal }) {
       />
     </div>
   )
-}	
+});
+
+export default TaskList;
