@@ -37,6 +37,8 @@ app.js             // Entry point of the application
    - **PUT /tasks/:id**: Update an existing task.
    - **DELETE /tasks/:id**: Remove a task.
 
+4. **CORS ISSUE**:
+   - Server will only accept requests from localhost:3300, this is not configured right now.
 ---
 
 #### How to Run the Backend

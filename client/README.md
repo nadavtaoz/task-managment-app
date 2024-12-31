@@ -111,9 +111,9 @@ To get started with the project, follow these steps:
    Create a `.env` file based on the `.env.example` file. Make sure to add your environment-specific variables, such as API URLs, before starting the application.
    Example:
    ```env
-   REACT_APP_API_URL=http://localhost:3300
+   REACT_APP_API_URL=http://localhost:3000
    ```
-   * it's recommned to use this url - http://localhost:3300 because the node server has cors verified for this address only. For more informetion look for the ../server folder. 
+   * it's recommned to use this url - http://localhost:3000 because the node server has cors verified for this address only. For more informetion look for the ../server folder. 
 
 ---
 
@@ -125,7 +125,7 @@ To start the development server, run:
 ```bash
 npm run dev
 ```
-This will launch the app in development mode and open it in your browser at `http://localhost:3300`.
+This will launch the app in development mode and open it in your browser at `http://localhost:3000`.
 
 ### Building for Production
 
