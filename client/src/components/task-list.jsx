@@ -4,8 +4,9 @@ import { tasksState, sortCriteriaState } from "../recoil/atoms";
 import { Pagination, Paper, ListItem, ListItemText, List, Box, Typography } from "@mui/material";
 
 import { priorityColors } from "../constants";
-import SortCriteria from "./sort-criteria";
+import SortCriteria from "./filters/sort-criteria";
 import { sortTasks } from "../utils/sorting";
+import FilterCriteria from "./filters/filter-criteria";
 
 export default function TaskList({ openModal }) {
 
@@ -36,7 +37,10 @@ export default function TaskList({ openModal }) {
   return (
     <div className="tasks-list-container">
       <Paper elevation={3} sx={{ padding: 2 }}>
-        <SortCriteria />
+        <Box sx={{ display: "flex", gap: 2 }}>
+          <SortCriteria />
+          <FilterCriteria />
+        </Box>
         <List>
           {currentTasks.map((task, index) => (
             <ListItem

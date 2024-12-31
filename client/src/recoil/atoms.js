@@ -9,3 +9,11 @@ export const sortCriteriaState = atom({
   key: "sortCriteriaState",
   default: "",
 });
+
+export const filterCriteriaState = atom({
+  key: "filterCriteriaState",
+  default: {
+    field: "",
+    value: ""
+  }
+});
