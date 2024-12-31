@@ -13960,38 +13960,22 @@
   },
   {
     "id": "1001",
-    "title": "fdsfsdfds",
-    "description": "sdfsdffds",
+    "title": "new task 1",
+    "description": "fsdfsdfsdf",
     "priority": "High",
     "taskOwner": "fsdfsdfsd",
-    "dueDate": "2025-01-02",
-    "status": {
-      "PENDING": "Pending",
-      "IN_PROGRESS": "In Progress",
-      "COMPELTED": "Completed",
-      "TO_DO": "To Do"
-    },
-    "creationTime": "2024-12-31T07:54:30.392Z",
-    "tags": []
+    "dueDate": "2025-01-09",
+    "status": "To Do"
   },
   {
     "id": "1002",
-    "title": "gggggggg",
-    "description": "fffffff",
+    "title": "new task 2",
+    "description": "fdsgsdgsd",
     "priority": "Medium",
-    "taskOwner": "fffffff",
-    "dueDate": "2025-01-02",
+    "taskOwner": "gdfsgfdgdf",
+    "dueDate": "2025-01-03",
     "status": "Pending",
-    "creationTime": "2024-12-31T07:54:59.558Z",
+    "creationTime": "2024-12-31T13:16:20.247Z",
     "tags": []
-  },
-  {
-    "id": "1003",
-    "title": "nadav task",
-    "description": "fsdfsdfds",
-    "priority": "Low",
-    "taskOwner": "nadavi",
-    "dueDate": "2024-10-03",
-    "status": "Pending"
   }
 ]

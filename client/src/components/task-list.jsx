@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
-import { tasksState } from "../recoil/atoms";
+import { tasksState, sortCriteriaState } from "../recoil/atoms";
 import { Pagination, Paper, ListItem, ListItemText, List, Box, Typography } from "@mui/material";
 
-import { priorityColors } from "../constants";
+import { priorityColors, taskPriorities, taskStatusTypes } from "../constants";
+import SortCriteria from "./sort-criteria";
 
 export default function TaskList({ openModal }) {
 
   const tasks = useRecoilValue(tasksState);
+  const sortCriteria = useRecoilValue(sortCriteriaState);
+  
   const itemsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -15,8 +18,28 @@ export default function TaskList({ openModal }) {
   const indexOfLastTask = currentPage * itemsPerPage;
   const indexOfFirstTask = indexOfLastTask - itemsPerPage;
 
+  // Sorting function
+  const sortTasks = ([...ts]) => {
+    if(!ts || !ts.length) {
+      return [];
+    }
+    if (sortCriteria === "priority") {
+      const priorityOrder = Object.values(taskPriorities);
+      return ts.sort((a, b) => priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority));
+    }
+    if (sortCriteria === "status") {
+      const statusOrder = Object.values(taskStatusTypes);
+      return ts.sort((a, b) => statusOrder.indexOf(a.status) - statusOrder.indexOf(b.status));
+    }
+    if (sortCriteria === "dueDate") {
+      return ts.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+    }
+    return ts; // No sorting
+  };
+
   // Slice the tasks array to only include the tasks for the current page
-  const currentTasks = tasks.slice(indexOfFirstTask, indexOfLastTask);
+  const sortedTasks = sortTasks(tasks);
+  const currentTasks = sortedTasks.slice(indexOfFirstTask, indexOfLastTask);
 
   // Handle page change
   const handlePageChange = (event, value) => {
@@ -31,6 +54,7 @@ export default function TaskList({ openModal }) {
   return (
     <div className="tasks-list-container">
       <Paper elevation={3} sx={{ padding: 2 }}>
+        <SortCriteria />
         <List>
           {currentTasks.map((task, index) => (
             <ListItem

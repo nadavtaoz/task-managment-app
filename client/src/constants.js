@@ -9,6 +9,7 @@ export const defaultTask = {
   status: ""
 };
 
+// Node - Sorted by priority order
 export const taskPriorities = {
   LOW: "Low",
   MEDIUM: "Medium",
