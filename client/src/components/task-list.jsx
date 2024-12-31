@@ -1,17 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRecoilValue } from "recoil";
-import { tasksState, sortCriteriaState } from "../recoil/atoms";
+import { tasksState, sortCriteriaState, filterCriteriaState } from "../recoil/atoms";
 import { Pagination, Paper, ListItem, ListItemText, List, Box, Typography } from "@mui/material";
 
 import { priorityColors } from "../constants";
 import SortCriteria from "./filters/sort-criteria";
 import { sortTasks } from "../utils/sorting";
+import { filterTasks } from "../utils/filtering";
 import FilterCriteria from "./filters/filter-criteria";
 
 export default function TaskList({ openModal }) {
 
-  const tasks = useRecoilValue(tasksState);
-  const sortCriteria = useRecoilValue(sortCriteriaState);
+  const tasks           = useRecoilValue(tasksState);
+  const sortCriteria    = useRecoilValue(sortCriteriaState);
+  const filterCriteria  = useRecoilValue(filterCriteriaState);
   
   const itemsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,8 +22,23 @@ export default function TaskList({ openModal }) {
   const indexOfLastTask = currentPage * itemsPerPage;
   const indexOfFirstTask = indexOfLastTask - itemsPerPage;
 
+  const prevFilterCriteriaRef = useRef();
+  // Reset currentPage to 1 if filterCriteria changes
+  useEffect(() => {
+if (prevFilterCriteriaRef.current) {
+      if (prevFilterCriteriaRef.current.value !== filterCriteria.value) {
+        setCurrentPage(1); // Reset page if the value of the filter has changed
+      }
+    }
+    prevFilterCriteriaRef.current = filterCriteria; // Update the reference for the next render
+  }, [filterCriteria]);
+
+
+  // Filter and sort the tasks
+  const filteredTasks = filterTasks(tasks, filterCriteria);
+  const sortedTasks = sortTasks(filteredTasks, sortCriteria);
+
   // Slice the tasks array to only include the tasks for the current page
-  const sortedTasks = sortTasks(tasks, sortCriteria);
   const currentTasks = sortedTasks.slice(indexOfFirstTask, indexOfLastTask);
 
   // Handle page change
@@ -87,11 +104,11 @@ export default function TaskList({ openModal }) {
       </Paper>
 
       <Pagination
-        count={Math.ceil(tasks.length / itemsPerPage)} // Total number of pages
-        page={currentPage} // Current page
-        onChange={handlePageChange} // Update page on change
+        count={Math.ceil(sortedTasks.length / itemsPerPage)}  // Total number of pages
+        page={currentPage}                                    // Current page
+        onChange={handlePageChange}                           // Update page on change
         color="primary"
-        sx={{ marginTop: 2, display: 'flex', justifyContent: 'center' }}
+        sx={{ marginTop: 2, marginBottom: 2, display: 'flex', justifyContent: 'center' }}
       />
     </div>
   )
