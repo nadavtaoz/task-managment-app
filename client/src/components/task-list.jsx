@@ -33,7 +33,7 @@ export default function TaskList({openModal}) {
 						{currentTasks.map((task, index) => (
 							<ListItem
 								 key={task.id}
-								 onClick={() => handleItemClick(task)}
+								 onClick={() => handleItemClick(task.id)}
 								 sx={{
 									'&:hover': {
 										backgroundColor: '#f4f4f4', // Light gray background on hover

@@ -33,6 +33,13 @@ module.exports = class Task {
     this.status = status;
   }
 
+  static statusTypes = {
+    PENDING: "Pending",
+    IN_PROGRESS: "In Progress",
+    COMPELTED: "Completed",
+    TO_DO: "To Do"
+  };
+
   save(cb) {
     getTasksFromFile(tasks => {
       if (this.id) {
@@ -44,7 +51,6 @@ module.exports = class Task {
         this.id = (tasks.length ? parseInt(tasks[tasks.length - 1].id) + 1 : 1).toString();
         const currentDate = new Date();
         this.creationTime = currentDate.toISOString();
-        this.status = "Pending";
         this.tags = [];
         tasks.push(this);
       }
@@ -76,8 +82,8 @@ module.exports = class Task {
   }
 
   // format task row data to Task instance
-  static format({ id, title, description, status, taskOwner, dueDate, priority }) {
-    return new Task(id, title, description, status, taskOwner, dueDate, priority);
+  static format(task) {
+    return new Task(task.id, task.title, task.description, task.priority, task.taskOwner, task.dueDate, task.status);
   }
 };
 

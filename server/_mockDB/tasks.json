@@ -1,18 +1,12 @@
 [
   {
     "id": "1",
-    "title": "Job leader the.",
+    "title": "Job leader the.ggggg",
     "description": "Thus offer what fund continue true. One plan around sure run trip senior.",
-    "dueDate": "2024-09-30",
-    "status": "Completed",
-    "creationTime": "2024-08-02T05:15:29Z",
-    "taskOwner": "John Miller Jr.",
     "priority": "Low",
-    "tags": [
-      "Writing",
-      "Authentication",
-      "Maintenance"
-    ]
+    "taskOwner": "John Miller Jr.",
+    "dueDate": "2024-09-30",
+    "status": "Pending"
   },
   {
     "id": "2",
@@ -33,45 +27,22 @@
     "id": "3",
     "title": "Million clearly along threat.",
     "description": "Politics agency woman build evidence cut action. Buy herself think bring specific chair. Let turn adult nor song adult.",
-    "dueDate": "2024-09-28",
-    "status": "To Do",
-    "creationTime": "2024-07-04T10:50:29Z",
-    "taskOwner": "Cassandra Wilson",
-    "priority": "High",
-    "tags": [
-      "Testing",
-      "Code Review",
-      "Writing"
-    ]
+    "priority": "To Do"
   },
   {
     "id": "4",
     "title": "Republican grow though number.",
     "description": "Hold join visit behavior table. Stop it give say.",
-    "dueDate": "2024-09-09",
-    "status": "To Do",
-    "creationTime": "2024-07-06T09:24:29Z",
-    "taskOwner": "Amanda White PhD",
-    "priority": "Critical",
-    "tags": [
-      "Writing",
-      "Code Review"
-    ]
+    "priority": "In Progress"
   },
   {
     "id": "5",
     "title": "Life piece ability decide data sound.",
     "description": "Nice follow question industry subject drug performance. That could night together. Most treat laugh.",
-    "dueDate": "2024-10-08",
-    "status": "In Progress",
-    "creationTime": "2024-08-11T22:49:29Z",
-    "taskOwner": "Kayla Fuller",
     "priority": "High",
-    "tags": [
-      "Code Review",
-      "Testing",
-      "Authentication"
-    ]
+    "taskOwner": "Kayla Fuller",
+    "dueDate": "2024-10-08",
+    "status": "To Do"
   },
   {
     "id": "6",
@@ -14000,32 +13971,29 @@
   },
   {
     "id": "1001",
-    "title": "fffffffff",
-    "description": "fdddddddd",
-    "taskOwner": "fgdfgfd",
+    "title": "fdsfsdfds",
+    "description": "sdfsdffds",
+    "priority": "High",
+    "taskOwner": "fsdfsdfsd",
     "dueDate": "2025-01-02",
-    "status": "Pending",
-    "creationTime": "2024-12-30T20:19:18.172Z",
+    "status": {
+      "PENDING": "Pending",
+      "IN_PROGRESS": "In Progress",
+      "COMPELTED": "Completed",
+      "TO_DO": "To Do"
+    },
+    "creationTime": "2024-12-31T07:54:30.392Z",
     "tags": []
   },
   {
     "id": "1002",
-    "title": "gfdgdfgdf",
-    "description": "gdfgfdgfdgfdg",
-    "taskOwner": "gfdgfdgf",
-    "dueDate": "2025-01-01",
+    "title": "gggggggg",
+    "description": "fffffff",
+    "priority": "Medium",
+    "taskOwner": "fffffff",
+    "dueDate": "2025-01-02",
     "status": "Pending",
-    "creationTime": "2024-12-30T20:21:14.976Z",
-    "tags": []
-  },
-  {
-    "id": "1003",
-    "title": "fsdfsdfsd",
-    "description": "sdfdsfdsd",
-    "taskOwner": "nadavi",
-    "dueDate": "2025-01-01",
-    "status": "Pending",
-    "creationTime": "2024-12-30T20:22:25.217Z",
+    "creationTime": "2024-12-31T07:54:59.558Z",
     "tags": []
   }
 ]

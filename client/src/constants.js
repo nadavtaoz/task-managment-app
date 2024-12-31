@@ -6,4 +6,19 @@ export const defaultTask = {
   priority: "",
   taskOwner: "",
   dueDate: "",
+  status: ""
+};
+
+export const taskPriorities = {
+  LOW: "Low",
+  MEDIUM: "Medium",
+  HIGH: "High",
+  CRITICAL: "Critical"
+};
+
+export const taskStatusTypes = {
+  PENDING: "Pending",
+  IN_PROGRESS: "In Progress",
+  COMPELTED: "Completed",
+  TO_DO: "To Do"
 };

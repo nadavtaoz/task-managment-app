@@ -27,8 +27,8 @@ exports.getTaskById = (req, res, next) => {
  * Controller to create a new task
  */
 exports.createTask = (req, res, next) => {
-  const { title, description, status, taskOwner, dueDate } = req.body;
-  const task = new Task(null, title, description, status, taskOwner, dueDate);
+  const { title, description, priority, taskOwner, dueDate } = req.body;
+  const task = new Task(null, title, description, priority, taskOwner, dueDate, Task.statusTypes.PENDING);
   task.save(err => {
     if (err) {
       res.status(500).json({ message: 'Failed to create task' });
@@ -43,14 +43,21 @@ exports.createTask = (req, res, next) => {
  */
 exports.updateTask = (req, res, next) => {
   const { id } = req.params;
-  const { title, description, status } = req.body;
+  const { title, description, priority, taskOwner, dueDate, status } = req.body;
 
   Task.findById(id, existingTask => {
     if (!existingTask) {
       return res.status(404).json({ message: 'Task not found' });
     }
 
-    const updatedTask = new Task(id, title || existingTask.title, description || existingTask.description, status || existingTask.status);
+    const updatedTask = new Task(id, 
+      title || existingTask.title, 
+      description || existingTask.description, 
+      priority || existingTask.priority,
+      taskOwner || existingTask.taskOwner,
+      dueDate || existingTask.dueDate,
+      status || existingTask.status
+    );
     updatedTask.save(err => {
       if (err) {
         res.status(500).json({ message: 'Failed to update task' });

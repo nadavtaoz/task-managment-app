@@ -50,9 +50,37 @@ export default function TaskManager() {
   };
 
   // save task from modal
-  const handleSave = (updatedTask) => {
+  const handleSave = async (updatedTask) => {
     console.log("Updated Task:", updatedTask);
-    // setTask(updatedTask);
+    setIsLoading(true);
+    setIsModalOpen(false);
+    try {
+      // Find the original task from the task list
+      const originalTask = allTasks.find(task => task.id === updatedTask.id);
+
+      // Extract only updated fields
+      const taskUpdates = {};
+      for (const key in updatedTask) {
+        if (updatedTask[key] !== originalTask[key]) {
+          taskUpdates[key] = updatedTask[key];
+        }
+      }
+      
+      const updatedTaskResult = await taskService.updateTask(originalTask.id, taskUpdates);
+      const updatedTaskIndex = allTasks.findIndex(task => task.id === updatedTaskResult.id);
+      setTasks(prevTasks => {
+        const updatedTasks = [...prevTasks];
+        updatedTasks[updatedTaskIndex] = updatedTaskResult;
+        return updatedTasks;
+      });
+      alert("Task updated!");
+    } catch (err) {
+      console.error("Error updating task:", err.message);
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+      setModalTask({});
+    }
   };
 
   // open the edit task modal

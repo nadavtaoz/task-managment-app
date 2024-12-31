@@ -10,9 +10,8 @@ import {
   FormControl,
   Typography,
 } from "@mui/material";
-import { defaultTask } from "../constants";
 
-
+import { defaultTask, taskPriorities } from "../constants";
 
 export default function TaskForm({onSubmit, isLoading}) {
 
@@ -82,10 +81,7 @@ export default function TaskForm({onSubmit, isLoading}) {
 						onChange={handleChange}
 						required
 					>
-						<MenuItem value="Low">Low</MenuItem>
-						<MenuItem value="Medium">Medium</MenuItem>
-						<MenuItem value="High">High</MenuItem>
-						<MenuItem value="Critical">Critical</MenuItem>
+						{Object.values(taskPriorities).map(priority => <MenuItem key={priority} value={priority}>{priority}</MenuItem>)}
 					</Select>
 				</FormControl>
 
