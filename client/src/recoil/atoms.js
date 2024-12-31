@@ -17,3 +17,8 @@ export const filterCriteriaState = atom({
     value: ""
   }
 });
+
+export const searchFilter = atom({
+  key: "searchFilter",
+  default: ""
+});

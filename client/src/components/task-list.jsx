@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useRecoilValue } from "recoil";
-import { tasksState, sortCriteriaState, filterCriteriaState } from "../recoil/atoms";
+import { tasksState, sortCriteriaState, filterCriteriaState, searchFilter } from "../recoil/atoms";
 import { Pagination, Paper, ListItem, ListItemText, List, Box, Typography } from "@mui/material";
 
 import { priorityColors } from "../constants";
@@ -8,13 +8,15 @@ import SortCriteria from "./filters/sort-criteria";
 import { sortTasks } from "../utils/sorting";
 import { filterTasks } from "../utils/filtering";
 import FilterCriteria from "./filters/filter-criteria";
+import SearchCriteria from "./filters/search-criteria";
 
 export default function TaskList({ openModal }) {
 
-  const tasks           = useRecoilValue(tasksState);
-  const sortCriteria    = useRecoilValue(sortCriteriaState);
-  const filterCriteria  = useRecoilValue(filterCriteriaState);
-  
+  const tasks = useRecoilValue(tasksState);
+  const sortCriteria = useRecoilValue(sortCriteriaState);
+  const filterCriteria = useRecoilValue(filterCriteriaState);
+  const searchQuery = useRecoilValue(searchFilter);
+
   const itemsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -23,19 +25,27 @@ export default function TaskList({ openModal }) {
   const indexOfFirstTask = indexOfLastTask - itemsPerPage;
 
   const prevFilterCriteriaRef = useRef();
-  // Reset currentPage to 1 if filterCriteria changes
+  const prevSearchQueryRef = useRef();
+
+  // Reset currentPage to 1 if filterCriteria or searchQuery changes
   useEffect(() => {
-if (prevFilterCriteriaRef.current) {
-      if (prevFilterCriteriaRef.current.value !== filterCriteria.value) {
-        setCurrentPage(1); // Reset page if the value of the filter has changed
-      }
+    if (
+      (prevFilterCriteriaRef.current && prevFilterCriteriaRef.current.value !== filterCriteria.value) ||
+      (prevSearchQueryRef.current !== searchQuery)
+    ) {
+      setCurrentPage(1); // Reset page if the value of the filter or search query has changed
     }
     prevFilterCriteriaRef.current = filterCriteria; // Update the reference for the next render
-  }, [filterCriteria]);
+    prevSearchQueryRef.current = searchQuery; // Update the search query reference
+  }, [filterCriteria, searchQuery]);
 
+  // Filter tasks by search query, then apply filter and sort criteria
+  const filteredBySearch = tasks.filter(task => {
+    const searchString = (task.title + " " + task.description + " " + task.taskOwner).toLowerCase();
+    return searchString.includes(searchQuery.toLowerCase());
+  });
 
-  // Filter and sort the tasks
-  const filteredTasks = filterTasks(tasks, filterCriteria);
+  const filteredTasks = filterTasks(filteredBySearch, filterCriteria);
   const sortedTasks = sortTasks(filteredTasks, sortCriteria);
 
   // Slice the tasks array to only include the tasks for the current page
@@ -54,6 +64,9 @@ if (prevFilterCriteriaRef.current) {
   return (
     <div className="tasks-list-container">
       <Paper elevation={3} sx={{ padding: 2 }}>
+        <Box>
+          <SearchCriteria />
+        </Box>
         <Box sx={{ display: "flex", gap: 2 }}>
           <SortCriteria />
           <FilterCriteria />
