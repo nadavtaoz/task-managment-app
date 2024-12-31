@@ -1167,15 +1167,10 @@
     "id": "87",
     "title": "Stock sound work moment decision tonight.",
     "description": "Phone soon throw service identify learn. Road right president interest six conference. Truth information knowledge everything accept.",
-    "dueDate": "2024-08-26",
-    "status": "In Progress",
-    "creationTime": "2024-07-08T13:32:29Z",
-    "taskOwner": "Alan Love",
     "priority": "High",
-    "tags": [
-      "Documentation",
-      "Authentication"
-    ]
+    "taskOwner": "Alan Love",
+    "dueDate": "2024-08-26",
+    "status": "Pending"
   },
   {
     "id": "88",
@@ -1393,15 +1388,10 @@
     "id": "103",
     "title": "Free scene upon speak control magazine.",
     "description": "Account strategy second. Themselves visit at administration different.",
-    "dueDate": "2024-09-07",
-    "status": "To Do",
-    "creationTime": "2024-07-09T09:31:29Z",
+    "priority": "Medium",
     "taskOwner": "Mark White",
-    "priority": "Low",
-    "tags": [
-      "Maintenance",
-      "Authentication"
-    ]
+    "dueDate": "2024-09-07",
+    "status": "To Do"
   },
   {
     "id": "104",
@@ -1437,16 +1427,10 @@
     "id": "106",
     "title": "Strategy road occur something year.",
     "description": "Compare whether mouth your pressure last safe. Population even could talk road.",
-    "dueDate": "2024-09-11",
-    "status": "Completed",
-    "creationTime": "2024-08-16T01:40:29Z",
+    "priority": "Medium",
     "taskOwner": "Rachel Price",
-    "priority": "Low",
-    "tags": [
-      "Code Review",
-      "UI/UX",
-      "Maintenance"
-    ]
+    "dueDate": "2024-09-11",
+    "status": "Completed"
   },
   {
     "id": "107",

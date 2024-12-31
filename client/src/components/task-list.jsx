@@ -3,8 +3,9 @@ import { useRecoilValue } from "recoil";
 import { tasksState, sortCriteriaState } from "../recoil/atoms";
 import { Pagination, Paper, ListItem, ListItemText, List, Box, Typography } from "@mui/material";
 
-import { priorityColors, taskPriorities, taskStatusTypes } from "../constants";
+import { priorityColors } from "../constants";
 import SortCriteria from "./sort-criteria";
+import { sortTasks } from "../utils/sorting";
 
 export default function TaskList({ openModal }) {
 
@@ -18,27 +19,8 @@ export default function TaskList({ openModal }) {
   const indexOfLastTask = currentPage * itemsPerPage;
   const indexOfFirstTask = indexOfLastTask - itemsPerPage;
 
-  // Sorting function
-  const sortTasks = ([...ts]) => {
-    if(!ts || !ts.length) {
-      return [];
-    }
-    if (sortCriteria === "priority") {
-      const priorityOrder = Object.values(taskPriorities);
-      return ts.sort((a, b) => priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority));
-    }
-    if (sortCriteria === "status") {
-      const statusOrder = Object.values(taskStatusTypes);
-      return ts.sort((a, b) => statusOrder.indexOf(a.status) - statusOrder.indexOf(b.status));
-    }
-    if (sortCriteria === "dueDate") {
-      return ts.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
-    }
-    return ts; // No sorting
-  };
-
   // Slice the tasks array to only include the tasks for the current page
-  const sortedTasks = sortTasks(tasks);
+  const sortedTasks = sortTasks(tasks, sortCriteria);
   const currentTasks = sortedTasks.slice(indexOfFirstTask, indexOfLastTask);
 
   // Handle page change
